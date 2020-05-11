@@ -17,6 +17,7 @@
    display: flex;
    width: 100%;
    justify-content: space-around;
+   background-color: white;
  }
 
  section {
@@ -26,6 +27,7 @@
  #root {
    background: transparent;
    display: flex;
+   width: 100%;
    justify-content: space-around;
  }
 
