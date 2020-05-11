@@ -88,8 +88,8 @@
  }
 
  .listContainer {
-   width: 100%;
-   /* max-width: 30vw; */
+   /* width: 100%; */
+   max-width: 20vw;
    align-items: flex-start;
    background-color: #ebecf0;
    padding: 1vw;
