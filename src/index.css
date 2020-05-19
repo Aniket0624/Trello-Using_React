@@ -14,27 +14,42 @@
  }
 
  header {
-   display: flex;
    width: 100%;
+
    justify-content: space-around;
-   background-color: white;
+   background-color: rgba(0, 0, 0, .25);
  }
 
  section {
    display: flex;
  }
 
+ .user-logo {
+   width: 3vw;
+   height: 3vw;
+   font-size: 1.5vw;
+   border-radius: 50vw;
+   border:  none; 
+   background-color: white;
+   align-content: center;
+   align-self: center;
+   font-weight: 500;
+ }
+
  #root {
    background: transparent;
    display: flex;
    width: 100%;
+   flex-direction: column;
    justify-content: space-around;
  }
 
  .primary {
-   background-color: white;
-   justify-content: center;
+   /* background-color: white; */
+   justify-content: space-between;
    display: flex;
+   width: 95%;
+   align-self: center;
  }
 
  .App {

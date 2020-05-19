@@ -1,8 +1,5 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
-// import apiFetcher from "./apiFetcher"
-
+import IndividualBoard from './individual-board';
 
 class BoardComponent extends React.PureComponent {
   constructor() {
@@ -28,21 +25,14 @@ render() {
     </div>
   )
   }
+  var allBoards = this.state.data.map(el => {
+        return <IndividualBoard key = {el.id} BoardDetails = {el} />
+  })
   return (
     <div className = "Boards">
-        {this.state.data.map(el => (
-          <div class="card" style = {{width : "25%", marginTop : "2em", borderRadius : "0.5em"}}>
-            <div class="card-body">
-          <h1 class="card-title" style= {{textAlign : "center"}} key = {el.id}>  {el.name}   </h1>
-            <hr></hr>
-          <Link to = {`/board/${el.id}`}> 
-          <button style = {{float : "right"}} class = "btn btn-success"> Go to Board </button> </Link>
-     
-            </div>
-          </div>
-        ))}
+      {allBoards}
     </div>
-  );
+  )
 }
 }
 

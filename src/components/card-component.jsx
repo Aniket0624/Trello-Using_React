@@ -44,7 +44,6 @@ class CardComponent extends Component {
     );
   };
   render() {
-    //   console.log(this.state.data);
     return (
       <div className="listContainer list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
       <div className="listHead">

@@ -116,18 +116,21 @@ class ListComponent extends React.Component {
     if(this.state.listDetails.length === 0){
       return <h1>Loading...</h1>; 
     }
+    var allListwithCards = this.state.listDetails.map(ele => {
+      return (
+        <CardComponent
+        key={ele.id}
+        listDetails={ele}
+        onOpenModal={this.onOpenModal}
+      />
+      )
+    })
     return (
       <div
       style={{ display: 'flex', justifyContent: 'space-between' }}
       className="allLists"
     >
-       {this.state.listDetails.map(element => (
-            <CardComponent
-              key={element.id}
-              listDetails={element}
-              onOpenModal={this.onOpenModal}
-            />
-        ))}       
+       {allListwithCards}       
         <FormComponent 
         formName = "Add List"
         handleAddList = {this.handleAddList} />
