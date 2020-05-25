@@ -1,4 +1,4 @@
-import {DISPLAY_CHECKLIST, ADD_CHECKLIST, DELETE_CHECKLIST, ADD_CHECKITEM, DELETE_CHECKITEM, UPDATE_CHECKITEM} from "../../../constants/actionTypes"
+import {DISPLAY_CHECKLIST, ADD_CHECKLIST, DELETE_CHECKLIST, ADD_CHECKITEM, DELETE_CHECKITEM, UPDATE_CHECKITEM} from "../constants/actionTypes"
 
 const ModalReducers = (state = { checklists: [] }, action) => {
     switch(action.type) {

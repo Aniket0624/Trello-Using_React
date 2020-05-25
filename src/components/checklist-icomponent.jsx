@@ -3,13 +3,6 @@ import FormComponent from "./form-component";
 import CheckitemComponent from './checkitem-component';
 
 class ChecklistComponent extends Component {
-  state = {
-    inputForChecklistitems: []
-  };
-  handleChange(event) {
-    this.setState({ inputForChecklistitems: event.target.value });
-  }
-
   render() {
     
     return (

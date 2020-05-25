@@ -1,5 +1,5 @@
 
-import {DISPLAY_ALL_BOARDS} from "../../constants/actionTypes"
+import {DISPLAY_ALL_BOARDS} from "../constants/actionTypes"
 
   const BoardReducers = (state = { boards: []}, action) =>{
       switch (action.type) {

@@ -8,14 +8,6 @@ const styles = {
 };
 
 class ModalComponent extends React.Component {
-  state = {
-    inputForChecklist: ' ',
-  };
-  
-  handleChange(event) {
-    // console.log(this);
-    this.setState({ inputForChecklist: event.target.value });
-  }
 
   render() {
     if(this.props.checklistsDetails.length === 0 ){

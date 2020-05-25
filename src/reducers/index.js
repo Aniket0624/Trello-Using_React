@@ -1,10 +1,9 @@
 import {
     combineReducers
 } from "redux";
-import BoardReducers from "./Boards/boards"
-import ListReducer from "./Boards-withList/Lists"
-import ModalReducres from "./Boards-withList/ModalReducers/modal"
-// import CardReducer from "./Boards/List/Cards/cards"
+import BoardReducers from "./boards"
+import ListReducer from "./Lists"
+import ModalReducres from "./modal"
 
 const reducers = combineReducers({
     BoardReducers,

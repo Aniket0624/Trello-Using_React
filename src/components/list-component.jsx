@@ -8,60 +8,13 @@ import { fetchAllListsWithBoardId, addNewList, fetchChecklist, addChecklists, de
 
 class ListComponent extends React.Component {
   state = {
-    listDetails: [],
-    checklistsDetails: [],
-    open: false,
-    inputForList : [],
     boardID : this.props.match.params.id,
   };
 
-  handleChange(event) {
-    this.setState({ inputForList: event.target.value });
-  }
   componentDidMount() {
     this.props.showAllListswithBoardID(this.state.boardID);
   }
  
-  handleAddCheckItem = (checkItem, checklist) => {
-    fetch(
-      `https://api.trello.com/1/checklists/${checklist.id}/checkItems?name=${checkItem}&pos=bottom&checked=false&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
-      {
-        method: 'POST'
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        const checklistsDetails = this.state.checklistsDetails;
-
-        checklistsDetails[
-          checklistsDetails.indexOf(checklist)
-        ].checkItems = checklistsDetails[
-          checklistsDetails.indexOf(checklist)
-        ].checkItems.concat([data]);
-        this.setState({
-          checklistsDetails: checklistsDetails
-        });
-      });
-  };
-  handleDeleteCheckItem = checkItemDetails => {
-    fetch(
-      `https://api.trello.com/1/checklists/${checkItemDetails.idChecklist}/checkItems/${checkItemDetails.id}?key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
-      { method: 'DELETE' }
-    );
-
-    this.setState({
-      checklistsDetails: this.state.checklistsDetails.map(checkList => {
-        if (checkList.id === checkItemDetails.idChecklist) {
-          checkList.checkItems = checkList.checkItems.filter(
-            c => c.id !== checkItemDetails.id
-          );
-        }
-
-        return checkList;
-      })
-    });
-  };
-
   onOpenModal = cardDetails => {
     this.setState({ cardID : cardDetails.id , open: true });
     this.props.fetchChecklist(cardDetails.id);
@@ -69,17 +22,6 @@ class ListComponent extends React.Component {
     console.log(this.state.cardID);
   };
 
-  handleDeleteCheckList = idCheckList => {
-    fetch(
-      `https://api.trello.com/1/checklists/${idCheckList}?key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
-      { method: 'DELETE' }
-    );
-    this.setState({
-      checklistsDetails: this.state.checklistsDetails.filter(
-        checklist => checklist.id !== idCheckList
-      )
-    });
-  };
 
   onCloseModal = () => {
     this.setState({ open: false });

@@ -10,7 +10,6 @@ class BoardComponent extends React.PureComponent {
   }
 
  render() {
-  console.log(this.props.allBoards);
   if (this.props.allBoards.boards.length === 0) {
     return (
       <div class="d-flex align-items-center">

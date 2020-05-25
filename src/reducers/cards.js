@@ -2,7 +2,7 @@ import {
     DISPLAY_ALL_CARDS,
     DELETE_CARD,
     ADD_NEW_CARD
-} from "../../../constants/actionTypes"
+} from "../constants/actionTypes"
 
 
 const CardReducer = (state = [], action) => {

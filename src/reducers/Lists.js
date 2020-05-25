@@ -1,10 +1,10 @@
 import {
     DISPLAY_ALL_LISTS,
     ADD_NEW_LIST
-} from "../../constants/actionTypes"
+} from "../constants/actionTypes"
 import { combineReducers } from "redux";
-import CardReducer from "./Cards/cards";
-import ModalReducers from "./ModalReducers/modal";
+import CardReducer from "./cards";
+import ModalReducers from "./modal";
 
 const ListChildrenReducer = combineReducers({
     lists : CardReducer,
