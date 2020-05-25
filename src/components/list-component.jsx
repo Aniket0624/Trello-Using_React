@@ -2,52 +2,26 @@ import React from 'react';
 import ModalComponent from './modal-component';
 import FormComponent from './form-component';
 import CardComponent from './card-component';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchAllListsWithBoardId, addNewList, fetchChecklist, addChecklists, deleteChecklist, addCheckitem, deleteCheckitem } from "../actions"
 
 class ListComponent extends React.Component {
   state = {
     listDetails: [],
     checklistsDetails: [],
     open: false,
-    inputForList : []
+    inputForList : [],
+    boardID : this.props.match.params.id,
   };
 
   handleChange(event) {
     this.setState({ inputForList: event.target.value });
   }
   componentDidMount() {
-    fetch(
-      `https://api.trello.com/1/boards/${this.props.match.params.id}/lists?cards=none&card_fields=all&filter=open&fields=all&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`
-    )
-      .then(response => response.json())
-      .then(lists => this.setState({ listDetails: lists }));
+    this.props.showAllListswithBoardID(this.state.boardID);
   }
-  handleAddList = (listName) => {
-    if (listName !== '') {
-      fetch(
-        `https://api.trello.com/1/lists?name=${listName}&idBoard=${this.props.match.params.id}&pos=bottom&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
-        {
-          method: 'POST'
-        }
-      )
-        .then(response => response.json())
-        .then(list => {
-          this.setState({ listDetails: this.state.listDetails.concat([list]) });
-        });
-    }
-    // value = " ";
-  };
-  handleAddChecklist = checkListName => {
-    fetch(
-      `https://api.trello.com/1/cards/${this.state.cardId}/checklists?name=${checkListName}&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
-      { method: 'POST' }
-    )
-      .then(response => response.json())
-      .then(checkList =>
-        this.setState({
-          checklistsDetails: this.state.checklistsDetails.concat([checkList])
-        })
-      );
-  };
+ 
   handleAddCheckItem = (checkItem, checklist) => {
     fetch(
       `https://api.trello.com/1/checklists/${checklist.id}/checkItems?name=${checkItem}&pos=bottom&checked=false&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
@@ -89,13 +63,12 @@ class ListComponent extends React.Component {
   };
 
   onOpenModal = cardDetails => {
-    fetch(
-      `https://api.trello.com/1/cards/${cardDetails.id}/checklists?checkItems=all&checkItem_fields=name%2CnameData%2Cpos%2Cstate&filter=all&fields=all&key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`
-    )
-      .then(response => response.json())
-      .then(checkLists => this.setState({ checklistsDetails: checkLists }));
-    this.setState({ cardId: cardDetails.id, open: true });
+    this.setState({ cardID : cardDetails.id , open: true });
+    this.props.fetchChecklist(cardDetails.id);
+    console.log(this.props.checklists);
+    console.log(this.state.cardID);
   };
+
   handleDeleteCheckList = idCheckList => {
     fetch(
       `https://api.trello.com/1/checklists/${idCheckList}?key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`,
@@ -113,14 +86,15 @@ class ListComponent extends React.Component {
   };
 
   render() {
-    if(this.state.listDetails.length === 0){
+    if(this.props.allLists.length === 0){
       return <h1>Loading...</h1>; 
     }
-    var allListwithCards = this.state.listDetails.map(ele => {
+    var allListwithCards =this.props.allLists.map(ele => {
       return (
         <CardComponent
         key={ele.id}
         listDetails={ele}
+        listID={ele.id}
         onOpenModal={this.onOpenModal}
       />
       )
@@ -133,21 +107,41 @@ class ListComponent extends React.Component {
        {allListwithCards}       
         <FormComponent 
         formName = "Add List"
-        handleAddList = {this.handleAddList} />
+        handleAddList = {(name) => this.props.handleAddList(this.state.boardID, name)}
+         />
          
         <ModalComponent
           open={this.state.open}
           closeModal={this.onCloseModal}
-          checklistsDetails={this.state.checklistsDetails}
-          handleAddChecklist={this.handleAddChecklist}
-          handleAddCheckItem={this.handleAddCheckItem}
-          handleDeleteCheckItem={this.handleDeleteCheckItem}
+          checklistsDetails={this.props.checklists}
+          handleAddChecklist={(checklistName) => this.props.handleAddChecklist(this.state.cardID,checklistName)}
+          handleAddCheckItem={(checkList, checkitemName) => this.props.handleAddCheckItem(checkList, checkitemName)}
+          handleDeleteCheckItem={(checkLists) => this.props.handleDeleteCheckItem(checkLists)}
           handleUpdateCheckItem={this.handleUpdateCheckItem}
-          handleDeleteCheckList={this.handleDeleteCheckList}
+          handleDeleteCheckList={(checklistID) => this.props.handleDeleteCheckList(checklistID)}
         />
       </div>
     );
   }
 }
 
-export default ListComponent;
+ListComponent.propTypes = {
+  showAllListswithBoardID: PropTypes.func.isRequired,
+  allLists: PropTypes.array.isRequired,
+  newList: PropTypes.object
+};
+const mapStateToProps = state => ({
+  allLists: state.ListReducer.lists,
+  checklists : state.ModalReducres.checklists
+});
+
+const mapDispatchToProps = dispatch => ({
+  showAllListswithBoardID : BoardID => dispatch(fetchAllListsWithBoardId(BoardID)), 
+  handleAddList : (BoardID, listName) => dispatch(addNewList(BoardID, listName)),
+  fetchChecklist : (cardID) => dispatch(fetchChecklist(cardID)),
+  handleAddChecklist : (cardID, checklistName) => dispatch(addChecklists(cardID, checklistName)),
+  handleDeleteCheckList : (checkListID) => dispatch(deleteChecklist(checkListID)),
+  handleAddCheckItem : (checkList, checkitemName) => dispatch(addCheckitem(checkList, checkitemName)),
+  handleDeleteCheckItem : (checkList) => dispatch(deleteCheckitem(checkList))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);

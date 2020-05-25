@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { updateCheckitem } from '../actions';
+import { connect } from 'react-redux';
 
 class CheckitemComponent extends Component {
   state = {
@@ -62,4 +64,8 @@ class CheckitemComponent extends Component {
   }
 }
 
-export default CheckitemComponent;
+const mapDispatchToProps = dispatch => ({
+  handleUpdateCheckItem : (idCheckItem, event, idCard) => dispatch(updateCheckitem(idCheckItem, event, idCard))
+})
+
+export default connect (mapDispatchToProps)(CheckitemComponent) ;

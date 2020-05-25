@@ -1,23 +1,17 @@
 import React from 'react';
 import IndividualBoard from './individual-board';
+import { connect } from 'react-redux';
+import { fetchAllBoards } from '../actions';
 
 class BoardComponent extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = { data: [] };
-  }
+
   componentDidMount() {
-    const url = `https://api.trello.com/1/members/me/boards?key=0a888fcd467afb859a113e18472a165a&token=f287454275494e79765ee9355d8d4678edffe624889a85aa91fa254571b4bb14`;
-    fetch(url, {
-      method: 'Get'
-    })
-      .then(res => res.json())
-      .then(json => this.setState({ data: json }));
+    this.props.fetchBoards();
   }
 
-
-render() {
-  if (this.state.data.length === 0) {
+ render() {
+  console.log(this.props.allBoards);
+  if (this.props.allBoards.boards.length === 0) {
     return (
       <div class="d-flex align-items-center">
       <strong>Loading...</strong>
@@ -25,15 +19,22 @@ render() {
     </div>
   )
   }
-  var allBoards = this.state.data.map(el => {
+  var allBoardsBody = this.props.allBoards.boards.map(el => {
         return <IndividualBoard key = {el.id} BoardDetails = {el} />
   })
   return (
     <div className = "Boards">
-      {allBoards}
+      {allBoardsBody}
     </div>
   )
 }
 }
+const mapStateToProps = state => ({
+  allBoards: state.BoardReducers
+});
 
-export default BoardComponent;
+const mapDispatchToProps = dispatch => ({
+  fetchBoards :() => dispatch(fetchAllBoards())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoardComponent);
