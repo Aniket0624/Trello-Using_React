@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import {fetchAllBoards} from "./actions/index"
 import { createStore, applyMiddleware  } from 'redux';
 import reducer from "./reducers/index"
+import { ThemeProvider, CSSReset } from '@chakra-ui/core'
 
 
 const store = createStore(
@@ -24,6 +25,8 @@ class App extends Component {
   render() {
     // console.log("object");
     return (
+      <ThemeProvider >
+      <CSSReset />
       <Provider store={store}>
       <Router>
       <React.Fragment>
@@ -39,6 +42,7 @@ class App extends Component {
         </React.Fragment>
       </Router>
       </Provider>
+      </ThemeProvider>
     );
   }
 }

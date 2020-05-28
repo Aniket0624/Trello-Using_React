@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Avatar } from "@chakra-ui/core";
 
 class HeaderComponent extends Component {
     state = {  }
@@ -13,7 +14,7 @@ class HeaderComponent extends Component {
             </Link>
           </div>
           <img src="./Images/header-logo-2x.01ef898811a879595cea.png" alt="Trello" style= {{float: "center"}} />
-          <button class="user-logo">AD</button>
+          <Avatar size="lg" style = {{marginTop : "0.25em"}} name="Aniket Das" src="src/images/Aniket Das Passport.jpg" />
         </div>
       </header>
        );

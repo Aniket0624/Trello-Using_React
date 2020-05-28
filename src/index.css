@@ -87,11 +87,13 @@
 
  .textItem {
    width: 90%;
+   margin-top: 1em;
  }
 
  .styles_modal__gNwvD {
    padding: 5em;
    width: 30%;
+   background-color: #ebecf0;
  }
 
  .chechklistitems {

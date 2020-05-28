@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { updateCheckitem } from '../actions';
 import { connect } from 'react-redux';
+import { Checkbox } from "@chakra-ui/core";
+
 
 class CheckitemComponent extends Component {
   state = {
@@ -33,11 +35,13 @@ class CheckitemComponent extends Component {
   render() {
     return (
       <React.Fragment>
+      
         <div className="chechklistitems">
           <div className = "textItem">
-            <input
-              type="checkbox"
-              checked={this.state.checkState}
+            <Checkbox
+              style = {{marginRight : "0.5em", backgroundColor : "white", borderRadius : "0.5em", borderColor : "green"}}
+              size="lg" variantColor="green" 
+              isChecked={this.state.checkState}
               onChange={event => {
                 this.handleUpdateCheckItem(
                   this.props.checkItemDetails.id,

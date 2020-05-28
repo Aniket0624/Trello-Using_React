@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button } from "@chakra-ui/core";
+import { Input } from "@chakra-ui/core";
 
 class FormComponent extends Component {
   state = {
@@ -10,7 +12,8 @@ class FormComponent extends Component {
   render() {
     return (
       <form>
-        <input
+        <Input
+          variant="outline"
           id = "mainInput" 
           type="textbox"
           value={this.state.inputValue}
@@ -18,8 +21,11 @@ class FormComponent extends Component {
             this.handleChange(event);
           }}
         />
-        <button
+        <Button
           type="button"
+          leftIcon="add"
+          variantColor="green"
+          variant="solid"
           onClick={() => {
             this.props.formName === 'Add List'
               ? this.props.handleAddList(this.state.inputValue)
@@ -38,7 +44,7 @@ class FormComponent extends Component {
           className="btn btn-success"
         >
           {this.props.formName}
-        </button>
+        </Button>
       </form>
     );
   }

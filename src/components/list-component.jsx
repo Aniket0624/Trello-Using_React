@@ -9,6 +9,7 @@ import { fetchAllListsWithBoardId, addNewList, fetchChecklist, addChecklists, de
 class ListComponent extends React.Component {
   state = {
     boardID : this.props.match.params.id,
+    // open: false
   };
 
   componentDidMount() {
@@ -16,9 +17,9 @@ class ListComponent extends React.Component {
   }
  
   onOpenModal = cardDetails => {
-    this.setState({ cardID : cardDetails.id , open: true });
+    this.setState({ cardID : cardDetails.id , open: true , cardName : cardDetails.name});
     this.props.fetchChecklist(cardDetails.id);
-    console.log(this.props.checklists);
+    // console.log(this.props.checklists);
     console.log(this.state.cardID);
   };
 
@@ -55,6 +56,7 @@ class ListComponent extends React.Component {
         <ModalComponent
           open={this.state.open}
           closeModal={this.onCloseModal}
+          cardName = {this.state.cardName}
           checklistsDetails={this.props.checklists}
           handleAddChecklist={(checklistName) => this.props.handleAddChecklist(this.state.cardID,checklistName)}
           handleAddCheckItem={(checkList, checkitemName) => this.props.handleAddCheckItem(checkList, checkitemName)}

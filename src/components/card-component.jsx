@@ -3,6 +3,7 @@ import FormComponent from "./form-component"
 import { fetchAllCardsWithListId, addNewCard, deleteCard } from '../actions';
 import { connect } from 'react-redux';
 import IndicidualCard from './individual-card';
+import { Text } from "@chakra-ui/core";
 
 class CardComponent extends Component {
 
@@ -21,7 +22,7 @@ class CardComponent extends Component {
     return (
       <div className="listContainer list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
       <div className="listHead">
-        <h2 className="listName">{this.props.listDetails.name}</h2>
+        <Text fontSize="4xl" className="listName">{this.props.listDetails.name}</Text>
         </div>
         <div className="cards">
         {allCardsWithDetails}
