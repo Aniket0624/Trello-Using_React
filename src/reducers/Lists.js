@@ -27,7 +27,7 @@ const ListReducer = (state = {lists: [], currentCard: {}}, action) => {
         case ADD_NEW_LIST: {
             console.log(state.lists)
             state.lists = state.lists.concat([action.newList])
-           return state;
+            return state;
         }
         default:
             return {...state, ...ListChildrenReducer(state, action) }

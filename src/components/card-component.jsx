@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormComponent from "./form-component"
-import { fetchAllCardsWithListId, addNewCard, deleteCard } from '../actions';
+import * as CardAction from '../actions';
 import { connect } from 'react-redux';
 import IndicidualCard from './individual-card';
 import { Text } from "@chakra-ui/core";
@@ -8,7 +8,23 @@ import { Text } from "@chakra-ui/core";
 class CardComponent extends Component {
 
   componentDidMount() {
-    this.props.showAllCardByListId(this.props.listDetails);
+    let { dispatch } = this.props;
+    let action = CardAction.requestGetAllCardsByListId(this.props.listDetails)
+    dispatch(action);
+  };
+
+
+  handleAddcard = cardName => {
+    let { dispatch } = this.props;
+    let action = CardAction.requestAddNewCard(this.props.listDetails.id, cardName, this.props.listDetails)
+    dispatch(action);
+  };
+
+
+  handleDeleteCard = (deleteCardID) => {
+    let { dispatch } = this.props;
+    let action = CardAction.requestdeleteCardAction(deleteCardID, this.props.listDetails.id, this.props.listDetails);
+    dispatch(action);
   };
 
   render() {
@@ -17,7 +33,7 @@ class CardComponent extends Component {
        key={eachCard.id}
         CardDetails = {eachCard}
         onOpenModal = {this.props.onOpenModal}
-        handleDeleteCard = {(cardID) => this.props.handleDeleteCard(cardID, eachCard.idList, this.props.listDetails.id )}/>
+        handleDeleteCard = {this.handleDeleteCard}/>
       )
     return (
       <div className="listContainer list-cards u-fancy-scrollbar u-clearfix js-list-cards js-sortable ui-sortable">
@@ -29,7 +45,9 @@ class CardComponent extends Component {
         </div>
         <FormComponent 
         formName = "Add Card"
-        handleAddcard ={(name) => this.props.handleAddCard(this.props.listDetails.id, name, this.props.listDetails)} />
+        handleAddcard = {this.handleAddcard}
+        // handleAddcard ={(name) => this.props.handleAddCard(this.props.listDetails.id, name, this.props.listDetails)} 
+        />
       </div>
     );
   }
@@ -40,10 +58,10 @@ const mapStateToProps=(state,ownProps)=>{
     allCards : state.ListReducer.lists[state.ListReducer.lists.indexOf(ownProps.listDetails)].cards
 }}
 
-const mapDispatchToProps =dispatch => ({
-  showAllCardByListId : list => dispatch(fetchAllCardsWithListId(list)),
-  handleAddCard : (listID, cardName,list) => dispatch(addNewCard(listID,cardName, list, listID)),
-  handleDeleteCard : (cardID, listID, list) => dispatch(deleteCard(cardID, listID, list))
-})
+// const mapDispatchToProps =dispatch => ({
+//   showAllCardByListId : list => dispatch(fetchAllCardsWithListId(list)),
+//   handleAddCard : (listID, cardName,list) => dispatch(addNewCard(listID,cardName, list, listID)),
+//   handleDeleteCard : (cardID, listID, list) => dispatch(deleteCard(cardID, listID, list))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardComponent);
+export default connect(mapStateToProps)(CardComponent);

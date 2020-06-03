@@ -15,7 +15,7 @@ const ModalReducers = (state = { checklists: [] }, action) => {
                     checklistsDetails.indexOf(action.checklist)
                 ].checkItems = checklistsDetails[
                     checklistsDetails.indexOf(action.checklist)
-                ].checkItems.concat([action.newCheckitem]);
+                ].checkItems.concat(action.newCheckitem);
                 console.log(checklistsDetails);
               return {checklists : checklistsDetails}
          case DELETE_CHECKITEM : 

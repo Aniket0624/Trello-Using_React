@@ -1,12 +1,15 @@
 import React from 'react';
 import IndividualBoard from './individual-board';
 import { connect } from 'react-redux';
-import { fetchAllBoards } from '../actions';
+// import { requestGetAllBoards } from '../actions';
+import * as Action from '../actions';
 
 class BoardComponent extends React.PureComponent {
 
   componentDidMount() {
-    this.props.fetchBoards();
+    let { dispatch } = this.props;
+    let action = Action.requestGetAllBoards();
+    dispatch(action);
   }
 
  render() {
@@ -32,8 +35,4 @@ const mapStateToProps = state => ({
   allBoards: state.BoardReducers
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchBoards :() => dispatch(fetchAllBoards())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(BoardComponent);
+export default connect(mapStateToProps)(BoardComponent);

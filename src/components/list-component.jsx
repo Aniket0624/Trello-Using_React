@@ -4,25 +4,56 @@ import FormComponent from './form-component';
 import CardComponent from './card-component';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAllListsWithBoardId, addNewList, fetchChecklist, addChecklists, deleteChecklist, addCheckitem, deleteCheckitem } from "../actions"
-
+// import { requestgetAllListsByBoardId, addNewList, fetchChecklist, addChecklists, deleteChecklist, addCheckitem, deleteCheckitem } from "../actions"
+import * as Action from "../actions/index"
 class ListComponent extends React.Component {
   state = {
     boardID : this.props.match.params.id,
-    // open: false
+    open: false
   };
 
   componentDidMount() {
-    this.props.showAllListswithBoardID(this.state.boardID);
+    let { dispatch } = this.props;
+    let action = Action.requestgetAllListsByBoardId(this.state.boardID);
+    dispatch(action);
   }
+
+  handleAddList = (listName) => {
+    let { dispatch } = this.props;
+    let action = Action.addNewList(this.state.boardID, listName);
+    dispatch(action);
+  };
  
   onOpenModal = cardDetails => {
     this.setState({ cardID : cardDetails.id , open: true , cardName : cardDetails.name});
-    this.props.fetchChecklist(cardDetails.id);
-    // console.log(this.props.checklists);
-    console.log(this.state.cardID);
+    let { dispatch } = this.props;
+    let action = Action.requestFetchChecklist(cardDetails.id);
+    dispatch(action);
   };
 
+  handleAddChecklist = checkListName => {
+    let { dispatch } = this.props;
+    let action = Action.addChecklists(this.state.cardID, checkListName);
+    dispatch(action);
+  };
+
+  handleAddCheckItem = (checkItem, checklist) => {
+    let { dispatch } = this.props;
+    let action = Action.addCheckitem(checklist, checkItem);
+    dispatch(action);
+  };
+
+  handleDeleteCheckItem = checkItemDetails => {
+    let { dispatch } = this.props;
+    let action = Action.deleteCheckitem(checkItemDetails);
+    dispatch(action);
+  };
+
+  handleDeleteCheckList = idCheckList => {
+    let { dispatch } = this.props;
+    let action = Action.deleteChecklist(idCheckList);
+    dispatch(action);
+  };
 
   onCloseModal = () => {
     this.setState({ open: false });
@@ -50,42 +81,44 @@ class ListComponent extends React.Component {
        {allListwithCards}       
         <FormComponent 
         formName = "Add List"
-        handleAddList = {(name) => this.props.handleAddList(this.state.boardID, name)}
+        handleAddList = {this.handleAddList}
          />
          
         <ModalComponent
           open={this.state.open}
           closeModal={this.onCloseModal}
           cardName = {this.state.cardName}
-          checklistsDetails={this.props.checklists}
-          handleAddChecklist={(checklistName) => this.props.handleAddChecklist(this.state.cardID,checklistName)}
-          handleAddCheckItem={(checkList, checkitemName) => this.props.handleAddCheckItem(checkList, checkitemName)}
-          handleDeleteCheckItem={(checkLists) => this.props.handleDeleteCheckItem(checkLists)}
+          checklistsDetails={this.props.checklists} 
+          handleAddChecklist={this.handleAddChecklist}
+          handleAddCheckItem={this.handleAddCheckItem}
+          handleDeleteCheckItem={this.handleDeleteCheckItem}
           handleUpdateCheckItem={this.handleUpdateCheckItem}
-          handleDeleteCheckList={(checklistID) => this.props.handleDeleteCheckList(checklistID)}
+          handleDeleteCheckList={this.handleDeleteCheckList}
         />
       </div>
     );
   }
 }
 
-ListComponent.propTypes = {
-  showAllListswithBoardID: PropTypes.func.isRequired,
-  allLists: PropTypes.array.isRequired,
-  newList: PropTypes.object
-};
+// ListComponent.propTypes = {
+//   showAllListswithBoardID: PropTypes.func.isRequired,
+//   allLists: PropTypes.array.isRequired,
+//   newList: PropTypes.object
+// };
 const mapStateToProps = state => ({
   allLists: state.ListReducer.lists,
   checklists : state.ModalReducres.checklists
 });
 
-const mapDispatchToProps = dispatch => ({
-  showAllListswithBoardID : BoardID => dispatch(fetchAllListsWithBoardId(BoardID)), 
-  handleAddList : (BoardID, listName) => dispatch(addNewList(BoardID, listName)),
-  fetchChecklist : (cardID) => dispatch(fetchChecklist(cardID)),
-  handleAddChecklist : (cardID, checklistName) => dispatch(addChecklists(cardID, checklistName)),
-  handleDeleteCheckList : (checkListID) => dispatch(deleteChecklist(checkListID)),
-  handleAddCheckItem : (checkList, checkitemName) => dispatch(addCheckitem(checkList, checkitemName)),
-  handleDeleteCheckItem : (checkList) => dispatch(deleteCheckitem(checkList))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);
+// const mapDispatchToProps = dispatch => ({
+//   // requestgetAllListsByBoardId : BoardID => dispatch(requestgetAllListsByBoardId(BoardID)), 
+//   bindActionCreators( Action , dispatch)
+// })
+export default connect(mapStateToProps)(ListComponent);
+
+// handleAddList : (BoardID, listName) => dispatch(addNewList(BoardID, listName)),
+//   fetchChecklist : (cardID) => dispatch(fetchChecklist(cardID)),
+//   handleAddChecklist : (cardID, checklistName) => dispatch(addChecklists(cardID, checklistName)),
+//   handleDeleteCheckList : (checkListID) => dispatch(deleteChecklist(checkListID)),
+//   handleAddCheckItem : (checkList, checkitemName) => dispatch(addCheckitem(checkList, checkitemName)),
+//   handleDeleteCheckItem : (checkList) => dispatch(deleteCheckitem(checkList))
