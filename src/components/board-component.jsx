@@ -1,7 +1,6 @@
 import React from 'react';
 import IndividualBoard from './individual-board';
 import { connect } from 'react-redux';
-// import { requestGetAllBoards } from '../actions';
 import * as Action from '../actions';
 
 class BoardComponent extends React.PureComponent {

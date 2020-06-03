@@ -3,8 +3,6 @@ import ModalComponent from './modal-component';
 import FormComponent from './form-component';
 import CardComponent from './card-component';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-// import { requestgetAllListsByBoardId, addNewList, fetchChecklist, addChecklists, deleteChecklist, addCheckitem, deleteCheckitem } from "../actions"
 import * as Action from "../actions/index"
 class ListComponent extends React.Component {
   state = {
@@ -100,25 +98,9 @@ class ListComponent extends React.Component {
   }
 }
 
-// ListComponent.propTypes = {
-//   showAllListswithBoardID: PropTypes.func.isRequired,
-//   allLists: PropTypes.array.isRequired,
-//   newList: PropTypes.object
-// };
 const mapStateToProps = state => ({
   allLists: state.ListReducer.lists,
   checklists : state.ModalReducres.checklists
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   // requestgetAllListsByBoardId : BoardID => dispatch(requestgetAllListsByBoardId(BoardID)), 
-//   bindActionCreators( Action , dispatch)
-// })
 export default connect(mapStateToProps)(ListComponent);
-
-// handleAddList : (BoardID, listName) => dispatch(addNewList(BoardID, listName)),
-//   fetchChecklist : (cardID) => dispatch(fetchChecklist(cardID)),
-//   handleAddChecklist : (cardID, checklistName) => dispatch(addChecklists(cardID, checklistName)),
-//   handleDeleteCheckList : (checkListID) => dispatch(deleteChecklist(checkListID)),
-//   handleAddCheckItem : (checkList, checkitemName) => dispatch(addCheckitem(checkList, checkitemName)),
-//   handleDeleteCheckItem : (checkList) => dispatch(deleteCheckitem(checkList))

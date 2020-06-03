@@ -46,7 +46,6 @@ class CardComponent extends Component {
         <FormComponent 
         formName = "Add Card"
         handleAddcard = {this.handleAddcard}
-        // handleAddcard ={(name) => this.props.handleAddCard(this.props.listDetails.id, name, this.props.listDetails)} 
         />
       </div>
     );
@@ -57,11 +56,5 @@ const mapStateToProps=(state,ownProps)=>{
   return {
     allCards : state.ListReducer.lists[state.ListReducer.lists.indexOf(ownProps.listDetails)].cards
 }}
-
-// const mapDispatchToProps =dispatch => ({
-//   showAllCardByListId : list => dispatch(fetchAllCardsWithListId(list)),
-//   handleAddCard : (listID, cardName,list) => dispatch(addNewCard(listID,cardName, list, listID)),
-//   handleDeleteCard : (cardID, listID, list) => dispatch(deleteCard(cardID, listID, list))
-// })
 
 export default connect(mapStateToProps)(CardComponent);
