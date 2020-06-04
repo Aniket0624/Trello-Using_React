@@ -1,4 +1,4 @@
-import  { takeEvery, put, call, takeLatest } from "redux-saga/effects"
+import  { put, call, takeLatest } from "redux-saga/effects"
 import * as ActionTypes from "../constants/actionTypes"
 import CheckItemsAPI from "../services/checkItems-service"
 import * as CheckitemAction from "../actions/index"

@@ -28,7 +28,7 @@ function* handleAddCard(action){
 function* handleDeleteCard(action){
     try{
         const service = new CardAPI();
-        const deleteCard = yield call(service.deleteCard, action.cardID);
+        yield call(service.deleteCard, action.cardID);
         yield put(cardAction.deleteCardAction(action.list, action.cardID, action.listID))
     }
     catch(e){

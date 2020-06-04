@@ -1,4 +1,4 @@
-import  { takeEvery, put, call, takeLatest } from "redux-saga/effects"
+import  { takeEvery, put, call } from "redux-saga/effects"
 import * as ActionTypes from "../constants/actionTypes"
 import ListsAPI from "../services/list-service"
 import * as ListAction from "../actions/index"

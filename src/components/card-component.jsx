@@ -45,7 +45,7 @@ class CardComponent extends Component {
         </div>
         <FormComponent 
         formName = "Add Card"
-        handleAddcard = {this.handleAddcard}
+        handleAddFunction = {this.handleAddcard}
         />
       </div>
     );

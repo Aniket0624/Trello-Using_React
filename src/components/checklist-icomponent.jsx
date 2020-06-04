@@ -39,7 +39,7 @@ class ChecklistComponent extends Component {
               ))}
           <FormComponent 
                   formName = "Add CheckItems"
-                  handleAddCheckItem = {this.props.handleAddCheckItem}
+                  handleAddFunction = {this.props.handleAddCheckItem}
                   checkList = {this.props.checklistDetails} />
            </AccordionPanel>
         </AccordionItem>

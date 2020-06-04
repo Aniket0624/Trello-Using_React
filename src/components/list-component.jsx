@@ -79,7 +79,7 @@ class ListComponent extends React.Component {
        {allListwithCards}       
         <FormComponent 
         formName = "Add List"
-        handleAddList = {this.handleAddList}
+        handleAddFunction = {this.handleAddList}
          />
          
         <ModalComponent

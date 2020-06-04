@@ -40,7 +40,7 @@ class ModalComponent extends React.Component {
               <hr></hr>
           <FormComponent 
             formName = "Add Checklist"
-            handleAddChecklist = {this.props.handleAddChecklist}/>
+            handleAddFunction = {this.props.handleAddChecklist}/>
         </Modal>
       </div>
     );

@@ -27,16 +27,15 @@ class FormComponent extends Component {
           variantColor="green"
           variant="solid"
           onClick={() => {
-            this.props.formName === 'Add List'
-              ? this.props.handleAddList(this.state.inputValue)
-              : this.props.formName === 'Add Card'
-              ? this.props.handleAddcard(this.state.inputValue)
-              : this.props.formName === 'Add Checklist'
-              ? this.props.handleAddChecklist(this.state.inputValue)
-              : this.props.handleAddCheckItem(
-                  this.state.inputValue,
-                  this.props.checkList
-                );
+                if(this.props.formName === 'Add CheckItems'){
+                  this.props.handleAddFunction(
+                        this.state.inputValue,
+                        this.props.checkList
+                      );
+                }
+                else{
+                  this.props.handleAddFunction(this.state.inputValue)
+                }
                 this.setState({
                   inputValue: ''
                 });
@@ -51,3 +50,14 @@ class FormComponent extends Component {
 }
 
 export default FormComponent;
+
+// this.props.formName === 'Add List'
+// ? this.props.handleAddFunction(this.state.inputValue)
+// : this.props.formName === 'Add Card'
+// ? this.props.handleAddcard(this.state.inputValue)
+// : this.props.formName === 'Add Checklist'
+// ? this.props.handleAddChecklist(this.state.inputValue)
+// : this.props.handleAddCheckItem(
+//     this.state.inputValue,
+//     this.props.checkList
+//   );
